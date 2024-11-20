@@ -1,5 +1,6 @@
-First python package in a very long time... do not laugh.
+## Not safe to use
 
+🚧 Experimental implementation
 
 ### Setup
 
