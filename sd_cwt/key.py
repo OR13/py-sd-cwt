@@ -1,7 +1,8 @@
 from pycose.keys import EC2Key, curves
 from pycose.algorithms import Es256
+from pycose.keys.keyparam import KpKty, KpAlg, EC2KpX, EC2KpY, EC2KpCurve, KpKid
+from cbor2 import dumps
 
-from cbor2 import CBORTag, dumps
 import hashlib
 
 def thumbprint(cose_key: EC2Key):
@@ -20,3 +21,13 @@ def gen():
     cose_key.alg = Es256
     cose_key.kid = thumbprint(cose_key)
     return cose_key
+
+def public_from_private(cose_key: EC2Key):
+    return EC2Key.from_dict({
+        KpKid: cose_key.kid,
+        KpKty: cose_key.kty,
+        EC2KpCurve: cose_key.crv,
+        KpAlg: cose_key.alg,
+        EC2KpX: cose_key.x,
+        EC2KpY: cose_key.y,
+    })
