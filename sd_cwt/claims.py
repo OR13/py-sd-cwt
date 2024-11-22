@@ -92,7 +92,8 @@ def redact_map(map, disclosures = []):
         digest, disclosure = blind_claim(v, k)
         disclosures.append(disclosure)
         map[redacted_claim_key] =  [ digest ]
-      del map[k]
+      if map.get(k) != None:
+        del map[k]
     
   return map, disclosures
 
@@ -138,7 +139,8 @@ def reveal_map(map, hashed_disclosures):
             reveal_map(redacted_value, hashed_disclosures)
           elif (isinstance(redacted_value, list)):
             reveal_list(redacted_value, hashed_disclosures)
-        del map[k]
+        if map.get(k) != None:
+          del map[k]
 
     if(isinstance(v, dict)):
       reveal_map(v, hashed_disclosures)
